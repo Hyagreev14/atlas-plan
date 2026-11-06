@@ -19,7 +19,7 @@ ATLAS is a developer workspace and command centre: a single starting point for p
 
 ## Release model
 
-- **ATLAS 0.1 — Core:** first functional foundation; approximately 40 hours is a planning estimate, not an event threshold.
+- **ATLAS Core:** first functional foundation; approximately 40 hours is a planning estimate, not an event threshold.
 - **ATLAS Pro:** larger milestone building on Core with advanced capabilities.
 - **ATLAS:** long-term product vision.
 
@@ -30,11 +30,12 @@ See [CORE_VS_PRO.md](CORE_VS_PRO.md) for feature allocation. Feature-specific sc
 ATLAS should separate its desktop UI, project and system services, AI provider adapters, action protocol, permission system and platform integrations. Proposed technology direction (subject to validation) includes Tauri 2, React/TypeScript, local storage such as SQLite, platform credential storage and provider adapters.
 
 ### AI modes
+
 - **Helper/Tutor:** explains and guides; cannot modify files or execute modifying actions.
 - **Developer:** performs requested implementation work through approved actions.
 - **Hybrid:** performs work and explains decisions and changes.
 
-Chat and Voice can have independent modes. Voice follows Chat by default unless the user chooses an override.
+Chat and Voice can have independent modes. Voice follows Chat by default unless the user chooses an override. Voice is an additional interface to the shared ATLAS core, not a separate assistant. Core Voice Essentials provides push-to-talk and basic spoken interaction; Pro adds advanced voice and optional Visual Context Mode.
 
 ## Security invariant
 
@@ -61,7 +62,6 @@ Keep planned, in-progress, implemented and tested work distinct. Record meaningf
 
 - [README](README.md) — repository introduction.
 - [Core vs Pro](CORE_VS_PRO.md) — release split.
-- [Core features](Features/Core/) and [Pro features](Features/Pro/) — feature-specific scope.
-- [Ideas](Ideas/) — exploratory concepts, including [ATLAS Voice](Ideas/Voice.md).
+- [Core features](Features/Core/) and [Pro features](Features/Pro/) — feature-specific requirements.
 
-Keep this document focused on product-wide direction and rules; put feature-specific requirements in the corresponding feature document.
+Keep this document focused on product-wide direction and rules; put detailed behaviour, boundaries, dependencies and acceptance criteria in the corresponding feature document.
