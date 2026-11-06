@@ -2,7 +2,7 @@
 
 This is the current planned release split, not a promise that every feature will fit a fixed schedule.
 
-## ATLAS 0.1 — Core
+## ATLAS Core
 
 Core is the first functional foundation. It should be useful on its own and establish the shared architecture that later releases can extend.
 
