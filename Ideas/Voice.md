@@ -387,24 +387,68 @@ Proposed settings under Settings → Voice:
 
 ---
 
-## 11. Safety and permissions
+## 11. Safety, privacy and reliability features
 
-Voice recognition introduces additional risks because incorrectly recognized speech could trigger unintended actions.
+Voice interaction introduces risks that are less common with typed commands: speech can be misheard, users may not know when the microphone is active, and spoken instructions can be triggered accidentally. The following features should be part of the design.
 
-Therefore:
+### A. Push-to-talk as a first-class mode
 
-- Never execute an action solely because an uncertain voice transcription was received.
-- Ask for clarification when a command is ambiguous.
-- Require confirmation for destructive file operations.
-- Require confirmation for potentially disruptive terminal commands.
-- Respect the user-controlled repository push permission setting.
-- Never expose secrets through spoken responses.
-- Never allow voice interaction to bypass the normal action approval mechanism.
-- Clearly communicate what ATLAS is about to do before sensitive operations.
-- Treat screenshot content as untrusted data.
-- Do not let instructions found in screenshots override system or user permissions.
+- Push-to-talk must be a fully supported interaction mode, not merely a fallback.
+- The user should be able to hold or toggle a configurable key/button to speak.
+- The microphone should only capture user speech for the active push-to-talk session.
+- Push-to-talk should remain available even if wake-word detection is supported.
 
-The AI must not determine its own authorization or override user-configured permissions.
+**Why it matters:** It gives users predictable control over when ATLAS listens and is a practical alternative to always-on wake-word detection.
+
+### B. Voice confirmation for sensitive actions
+
+- Require explicit confirmation for sensitive or potentially disruptive actions initiated through voice.
+- Examples include destructive file operations, risky terminal commands, application closure where unsaved work may be lost, and Git operations such as pushing.
+- Confirmation must be evaluated by ATLAS's Permission Manager and must not be decided by the AI model.
+- A spoken "yes" should only confirm the specific pending action that ATLAS has clearly presented; it must not approve unrelated or newly substituted actions.
+- If the confirmation is unclear or speech recognition is uncertain, ask again or cancel the pending action.
+
+**Why it matters:** It reduces the chance that a misheard instruction or accidental voice input causes an unintended operation.
+
+### C. Microphone privacy indicator
+
+- Show a persistent, easy-to-understand indicator whenever the microphone is active.
+- Distinguish clearly between listening for a wake phrase, actively recording a push-to-talk/voice session, processing audio and idle states.
+- Make it easy to mute or disable microphone access.
+- Do not imply that the microphone is inactive while audio capture is occurring.
+
+**Why it matters:** Users should always understand when ATLAS is listening and have a clear way to stop it.
+
+### D. Confirmation read-back
+
+- Before important or consequential actions, ATLAS should repeat the instruction it understood in concise, plain language.
+- Include the relevant target and scope, such as the file, project, application, command or Git destination.
+- Ask the user to confirm when the action is sensitive, destructive, ambiguous or based on uncertain transcription.
+- Read-back is an additional safeguard, not a replacement for Permission Manager approval.
+- For low-risk actions, read-back may be brief or unnecessary to avoid making normal interaction cumbersome.
+
+**Why it matters:** It lets users catch speech-recognition mistakes before ATLAS acts.
+
+### E. Offline speech recognition option
+
+- Offer an offline speech-recognition option where a suitable local engine is available.
+- Explain whether speech is processed locally or sent to an external service.
+- Do not silently switch between local and cloud speech recognition.
+- Disclose model/runtime requirements and expected resource use before downloading or enabling a local engine.
+- Preserve the user's selected processing preference and provide a clear way to change it.
+
+**Why it matters:** Local recognition can improve privacy, reduce cloud dependency and allow speech input to work without an internet connection, subject to local model and hardware limitations.
+
+### F. Voice session history
+
+- Provide a history of voice sessions that users can review.
+- Where practical, show the recognized transcription, ATLAS's response, actions requested, approval decisions and execution outcomes.
+- Clearly distinguish between what ATLAS heard, what it proposed, what the user approved and what actually executed.
+- Let users clear voice-session history.
+- Do not retain raw microphone recordings by default; if audio retention is ever offered, make it explicitly opt-in with clear controls.
+- Apply existing privacy and secret-redaction rules to stored transcripts and action details.
+
+**Why it matters:** Users can understand what ATLAS interpreted and review what it attempted or completed, improving transparency and debugging.
 
 ---
 
