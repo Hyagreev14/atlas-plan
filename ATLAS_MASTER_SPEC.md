@@ -76,9 +76,17 @@ Keep planned, in-progress, implemented and tested work distinct. Record meaningf
 
 ## Documentation map
 
-- [README](README.md) — repository introduction.
-- [Core vs Pro](CORE_VS_PRO.md) — release split.
-- [Release and signing plan](RELEASE_AND_SIGNING.md) — Windows/Linux packaging, code signing and distribution risks.
-- [Core features](Features/Core/) and [Pro features](Features/Pro/) — feature-specific requirements.
+The planning repository is organised by responsibility:
 
-Keep this document focused on product-wide direction and rules; put detailed behaviour, boundaries, dependencies and acceptance criteria in the corresponding feature document.
+- [Design/](Design/README.md) — Figma-first workflow, design system, interactive prototype specification, screen inventory, component library and February handoff.
+- [Architecture/](Architecture/README.md) — system overview, Electron security, IPC contract, AAP/permissions and ADRs.
+- [Product/](Product/README.md) — product principles, Core scope and user journeys.
+- [Research/](Research/README.md) — reference-app evaluations and research log.
+- [Planning/](Planning/README.md) — roadmap, decision register and risk register.
+- [Quality/](Quality/README.md) — test strategy, accessibility and usability.
+- [Features/Core/](Features/Core/) and [Features/Pro/](Features/Pro/) — detailed feature requirements.
+- [Release and signing plan](RELEASE_AND_SIGNING.md) — packaging, code signing and distribution.
+
+Figma is the canonical visual/interaction specification through January 2027. February is the planned handoff to React + TypeScript implementation. The application source and tested runtime behaviour become authoritative for what is implemented.
+
+Keep this document focused on product-wide direction and rules; put detailed behaviour, boundaries, dependencies and acceptance criteria in the corresponding documents.
