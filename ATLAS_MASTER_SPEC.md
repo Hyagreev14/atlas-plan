@@ -16,6 +16,7 @@ ATLAS is a developer workspace and command centre: a single starting point for p
 - **Useful before clever:** prioritise complete workflows over feature count.
 - **Explain uncertainty:** distinguish verified facts from estimates and AI inferences.
 - **Cross-platform by design:** Windows and Linux are the initial release targets. Other platforms require a deliberate support decision and platform-specific validation.
+- **Self-hosting as an option:** users may eventually run their own ATLAS Server; this must not make the standalone desktop app dependent on a server.
 
 ## Release model and schedule
 
@@ -45,6 +46,21 @@ Optimise for responsiveness and sensible resource use without sacrificing useful
 
 ATLAS should separate its desktop UI, project and system services, AI provider adapters, action protocol, permission system and platform integrations. Keep platform-specific operations behind well-defined interfaces and validate behaviour on Windows and Linux independently.
 
+### Optional deployment modes
+
+ATLAS is planned to support two deployment modes within one product:
+
+1. **Standalone:** desktop application with local data storage. No ATLAS account, server or network connection is required for ordinary local functionality.
+2. **Self-hosted:** an operator deploys an ATLAS Server on infrastructure they control. Multiple user accounts and multiple authorized devices can connect to that instance, and the instance is intended to serve an ATLAS Web interface.
+
+The self-hosted mode is an optional extension. Standalone users must retain local access when offline or when no server is configured. Connecting to a server is explicit and reversible. Data migration and synchronization must be transparent and category-based.
+
+The proposed server responsibilities include account/session management, device registration and revocation, server-side authorization, synchronization of explicitly supported data, administration and hosting the browser client. Docker is the intended deployment direction, with persistent data stored outside the disposable container filesystem. Exact image, port, database, API and deployment contract remain undecided.
+
+The web client shares the server identity and authorization model but cannot directly perform privileged desktop operations such as launching local applications, arbitrary filesystem access or local terminal execution. Such capabilities remain local to the desktop app unless a separately reviewed companion architecture is designed.
+
+See [Architecture/DEPLOYMENT_MODES.md](Architecture/DEPLOYMENT_MODES.md), [Architecture/SELF_HOSTED_SERVER.md](Architecture/SELF_HOSTED_SERVER.md), [Architecture/WEB_CLIENT.md](Architecture/WEB_CLIENT.md) and [Architecture/SYNC_IDENTITY_MODEL.md](Architecture/SYNC_IDENTITY_MODEL.md).
+
 ### AI modes
 
 - **Helper/Tutor:** explains and guides; cannot modify files or execute modifying actions.
@@ -65,10 +81,14 @@ Chat and Voice can have independent modes. Voice follows Chat by default unless 
 - Secrets must remain outside model-visible context and logs.
 - Voice and screenshot context never bypass the same permission boundaries.
 - Agent-initiated Git pushes are OFF by default and remain subject to operation-specific controls.
+- Server authorization must be enforced server-side for every account-owned object; client-side visibility is not a security boundary.
+- Server sync must not upload local secrets, SSH private keys or entire project directories by default.
 
 ## Privacy and platform support
 
 Store settings and user-controlled workspace data locally by default. Optional cloud AI, downloads, updates and integrations must identify the external service and information shared. Windows and Linux are the initial supported targets; compatibility claims require platform-specific validation.
+
+For self-hosting, users control the server infrastructure and its backups, network exposure and updates. Remote deployments require protected transport and a deliberate network/reverse-proxy configuration; Docker port mapping alone is not a complete internet-exposure or security setup.
 
 ## Planning and verification
 
@@ -79,7 +99,7 @@ Keep planned, in-progress, implemented and tested work distinct. Record meaningf
 The planning repository is organised by responsibility:
 
 - [Design/](Design/README.md) — Figma-first workflow, design system, interactive prototype specification, screen inventory, component library and February handoff.
-- [Architecture/](Architecture/README.md) — system overview, Electron security, IPC contract, AAP/permissions and ADRs.
+- [Architecture/](Architecture/README.md) — desktop architecture, deployment modes, self-hosted server, web client, identity/sync, Electron security, IPC, AAP and ADRs.
 - [Product/](Product/README.md) — product principles, Core scope and user journeys.
 - [Research/](Research/README.md) — reference-app evaluations and research log.
 - [Planning/](Planning/README.md) — roadmap, decision register and risk register.
